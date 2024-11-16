@@ -8,11 +8,59 @@
 import SwiftUI
 
 struct ForgotPasswordView: View {
+    
+    @State var getEmail: String
+    @EnvironmentObject var authViewModel: AuthViewModel
+    
     var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
+
+        ResetPasswordInfo()
+        ForgotPassowrdTF(email: $getEmail)
+        SendLinkButton {
+            print("Email: \(getEmail)")
+        }
+        Spacer()
     }
 }
 
 #Preview {
-    ForgotPasswordView()
+    ForgotPasswordView(getEmail: "")
+        .environmentObject(AuthViewModel())
+}
+
+struct ForgotPassowrdTF: View {
+    @Binding var email: String
+    
+    var body: some View {
+        InputView(placeholder: "Enter your email", text: $email)
+    }
+}
+
+struct ResetPasswordInfo: View {
+    var body: some View {
+        VStack(alignment: .leading) {
+            Text("Reset Password")
+                .font(.largeTitle)
+            
+            Text("Enter the mail associated with your account and we'll send you a link to reset your password.")
+                .font(.subheadline)
+                .foregroundStyle(.secondary)
+        }
+        .padding(.horizontal, 12)
+        .padding(.vertical, 20)
+        .toolbarRole(.editor)
+    }
+}
+
+struct SendLinkButton: View {
+    var action: () -> Void
+    var body: some View {
+        Button {
+            action()
+        } label: {
+            Text("Send Reset Link")
+        }
+        .buttonStyle(CapsuleButtonStyle())
+        .padding(.top, 8)
+    }
 }

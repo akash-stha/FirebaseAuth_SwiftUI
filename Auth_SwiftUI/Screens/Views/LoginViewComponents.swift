@@ -42,12 +42,12 @@ struct TextfieldView: View {
 }
 
 struct ForgotView: View {
+    @EnvironmentObject var authViewModel: AuthViewModel
+    
     var body: some View {
         HStack {
             Spacer()
-            Button {
-                
-            } label: {
+            NavigationLink(destination: ForgotPasswordView(getEmail: "").environmentObject(authViewModel)) {
                 Text("Forgot Password?")
                     .foregroundStyle(.gray)
                     .font(.subheadline)
