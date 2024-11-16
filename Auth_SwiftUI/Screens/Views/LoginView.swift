@@ -21,7 +21,7 @@ struct LoginView: View {
                     LogoView()
                     
                     // MARK: Title
-                    GreetingTitleView() // test changes
+                    GreetingTitleView()
                     
                     // MARK: TextFields
                     TextfieldView(email: $getEmail, password: $getPassword)
