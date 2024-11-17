@@ -14,6 +14,7 @@ struct CreateAccountView: View {
     @State var getConfirmPassword: String = ""
     @EnvironmentObject var authViewModel: AuthViewModel
     @Environment(\.presentationMode) var presentationMode
+    @EnvironmentObject var router: Router
     
     var body: some View {
         VStack {
@@ -32,7 +33,8 @@ struct CreateAccountView: View {
                     )
                     
                     if !authViewModel.isError {
-                        presentationMode.wrappedValue.dismiss()
+//                        presentationMode.wrappedValue.dismiss()
+                        router.navigateBack()
                     } else {
                         
                     }

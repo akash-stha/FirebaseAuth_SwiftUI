@@ -12,45 +12,44 @@ struct LoginView: View {
     @State var getEmail: String = ""
     @State var getPassword: String = ""
     @EnvironmentObject var authViewModel: AuthViewModel
+    @EnvironmentObject var router: Router
 
     var body: some View {
-        NavigationStack {
-            ScrollView {
-                VStack {
-                    // MARK: Grettings and Icon
-                    LogoView()
-                    
-                    // MARK: Title
-                    GreetingTitleView()
-                    
-                    // MARK: TextFields
-                    TextfieldView(email: $getEmail, password: $getPassword)
-                    
-                    // MARK: Forgot Button
-                    ForgotView()
-                    
-                    // MARK: Login Button
-                    LoginButton() {
-                        Task {
-                            await authViewModel.login(email: getEmail, password: getPassword)
-                        }
+        ScrollView {
+            VStack {
+                // MARK: Grettings and Icon
+                LogoView()
+                
+                // MARK: Title
+                GreetingTitleView()
+                
+                // MARK: TextFields
+                TextfieldView(email: $getEmail, password: $getPassword)
+                
+                // MARK: Forgot Button
+                ForgotView()
+                
+                // MARK: Login Button
+                LoginButton() {
+                    Task {
+                        await authViewModel.login(email: getEmail, password: getPassword)
                     }
-                    
-                    // MARK: Divider
-                    DividerView()
-                    
-                    // MARK: Apple Login
-                    LoginWithApple()
-                    
-                    // MARK: Google Login
-                    LoginWithGoogle()
-                    
-                    // MARK: Footer
-                    SignupButton()
                 }
+                
+                // MARK: Divider
+                DividerView()
+                
+                // MARK: Apple Login
+                LoginWithApple()
+                
+                // MARK: Google Login
+                LoginWithGoogle()
+                
+                // MARK: Footer
+                SignupButton()
             }
-            .alert("Something went wrong!!!", isPresented: $authViewModel.isError) {}
         }
+        .alert("Something went wrong!!!", isPresented: $authViewModel.isError) {}
     }
 }
 

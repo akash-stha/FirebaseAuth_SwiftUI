@@ -8,6 +8,8 @@
 import SwiftUI
 
 struct EmailSentView: View {
+    @EnvironmentObject var router: Router
+    
     var body: some View {
         Spacer()
         
@@ -25,7 +27,7 @@ struct EmailSentView: View {
             .foregroundStyle(.secondary)
         
         Button {
-            
+            router.navigateToRoot()
         } label: {
             Text("Skip")
         }

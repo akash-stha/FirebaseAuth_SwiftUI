@@ -43,16 +43,26 @@ struct TextfieldView: View {
 
 struct ForgotView: View {
     @EnvironmentObject var authViewModel: AuthViewModel
+    @EnvironmentObject var router: Router
     
     var body: some View {
         HStack {
             Spacer()
-            NavigationLink(destination: ForgotPasswordView(getEmail: "").environmentObject(authViewModel)) {
+//            NavigationLink(destination: ForgotPasswordView(getEmail: "").environmentObject(authViewModel)) {
+//                Text("Forgot Password?")
+//                    .foregroundStyle(.gray)
+//                    .font(.subheadline)
+//                    .fontWeight(.semibold)
+//            }
+            Button {
+                router.navigate(to: .forgotPassword)
+            } label: {
                 Text("Forgot Password?")
                     .foregroundStyle(.gray)
                     .font(.subheadline)
                     .fontWeight(.semibold)
             }
+
         }
         .padding(10)
         .padding(.horizontal, 10)
@@ -106,11 +116,24 @@ struct LoginWithGoogle: View {
 
 struct SignupButton: View {
     @EnvironmentObject var authViewModel: AuthViewModel
+    @EnvironmentObject var router: Router
     
     var body: some View {
-        NavigationLink {
-            CreateAccountView()
-                .environmentObject(authViewModel)
+//        NavigationLink {
+//            CreateAccountView()
+//                .environmentObject(authViewModel)
+//        } label: {
+//            HStack {
+//                Text("Don't have an account?")
+//                    .foregroundStyle(.black)
+//                Text("Sign Up")
+//                    .foregroundStyle(.teal)
+//                    .fontWeight(.bold)
+//            }
+//        }
+        
+        Button {
+            router.navigate(to: .createAccount)
         } label: {
             HStack {
                 Text("Don't have an account?")
@@ -120,6 +143,7 @@ struct SignupButton: View {
                     .fontWeight(.bold)
             }
         }
+
     }
 }
 

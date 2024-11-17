@@ -21,12 +21,25 @@ struct Auth_SwiftUIApp: App {
     // Register app delegate for Firebase setup
     @UIApplicationDelegateAdaptor(AppDelegate.self) var delegate
     @StateObject private var authViewModel = AuthViewModel()
+    @ObservedObject private var router = Router()
     
     var body: some Scene {
         WindowGroup {
-            ContentView()
-                .environmentObject(authViewModel)
-                .preferredColorScheme(.light)
+            NavigationStack(path: $router.navPath) {
+                ContentView()
+                    .navigationDestination(for: Router.AuthFlow.self) { destination in
+                        switch destination {
+                        case .login: LoginView()
+                        case .createAccount: CreateAccountView()
+                        case .profile: ProfileView()
+                        case .forgotPassword: ForgotPasswordView(getEmail: "")
+                        case .emailSent: EmailSentView()
+                        }
+                    }
+            }
+            .environmentObject(authViewModel)
+            .environmentObject(router)
+            .preferredColorScheme(.light)
         }
     }
 }
