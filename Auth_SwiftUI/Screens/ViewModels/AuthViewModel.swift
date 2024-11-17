@@ -96,4 +96,12 @@ final class AuthViewModel: ObservableObject {
         firesore.collection("users").document(uid).delete()
     }
     
+    func resetPassword(by email: String) async {
+        do {
+            try await auth.sendPasswordReset(withEmail: email)
+        } catch {
+            isError = true
+        }
+    }
+    
 }

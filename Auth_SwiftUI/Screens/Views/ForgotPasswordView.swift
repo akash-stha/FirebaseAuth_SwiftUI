@@ -10,14 +10,25 @@ import SwiftUI
 struct ForgotPasswordView: View {
     
     @State var getEmail: String
+    @State private var isEmailSent: Bool = false
     @EnvironmentObject var authViewModel: AuthViewModel
     
     var body: some View {
-
         ResetPasswordInfo()
         ForgotPassowrdTF(email: $getEmail)
         SendLinkButton {
-            print("Email: \(getEmail)")
+            Task {
+                await authViewModel.resetPassword(by: getEmail)
+                if !authViewModel.isError {
+                    isEmailSent = true
+                }
+            }
+        }
+        .navigationDestination(isPresented: $isEmailSent) {
+            EmailSentView()
+        }
+        .onAppear() {
+            getEmail = ""
         }
         Spacer()
     }
@@ -33,6 +44,7 @@ struct ForgotPassowrdTF: View {
     
     var body: some View {
         InputView(placeholder: "Enter your email", text: $email)
+            .keyboardType(.emailAddress)
     }
 }
 
